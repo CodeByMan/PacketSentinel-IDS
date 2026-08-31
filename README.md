@@ -27,8 +27,6 @@ PacketSentinel supports three explicitly separated inputs:
 - **Streaming PCAP replay** for captures the operator is authorized to inspect
 - **Opt-in live capture** for networks the operator owns or has permission to monitor
 
-This project is an educational heuristic IDS prototype. It is not an enterprise IDS, production SIEM, machine-learning detector, or proof that every alert represents a real attack.
-
 ---
 
 ## ✨ Features
@@ -86,7 +84,7 @@ This project is an educational heuristic IDS prototype. It is not an enterprise 
 
 ## 🖼️ Screenshots
 
-| Live dashboard |
+| Dashboard |
 | --- |
 | ![PacketSentinel IDS dashboard](docs/screenshots/homepage.png) |
 
