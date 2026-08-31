@@ -1,0 +1,4 @@
+scapy>=2.5.0
+flask>=3.0.0
+colorama>=0.4.6
+pytest>=7.0.0
