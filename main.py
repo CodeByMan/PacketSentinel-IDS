@@ -56,9 +56,9 @@ def parse_args():
                    help="Network interface to sniff (default: auto-detect).")
     p.add_argument("-p", "--port", type=int, default=config.dashboard_port,
                    help="Port for the web dashboard.")
-    p.add_argument("--host", choices=("127.0.0.1", "0.0.0.0"),
+    p.add_argument("--host", choices=("127.0.0.1", "localhost"),
                    default=config.dashboard_host,
-                   help="Dashboard bind address; 0.0.0.0 exposes an unauthenticated UI.")
+                   help="Dashboard bind address; unauthenticated access is loopback-only.")
     p.add_argument("--no-dashboard", action="store_true",
                    help="Run detection only, without the web dashboard.")
     p.add_argument("--no-loopback", action="store_true",
@@ -87,8 +87,6 @@ def main():
     if not args.no_dashboard:
         shown_host = "localhost" if config.dashboard_host == "127.0.0.1" else config.dashboard_host
         print(f"  Dashboard  : http://{shown_host}:{config.dashboard_port}")
-        if config.dashboard_host == "0.0.0.0":
-            print("  WARNING    : unauthenticated dashboard exposed to the local network")
     print(f"  Log file   : {config.log_file}")
     print(f"  Database   : {config.db_file}")
     print("  Stop       : Ctrl+C")

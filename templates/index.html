@@ -236,19 +236,38 @@
           (a.attack_type||'').toLowerCase().includes(t) ||
           (a.details||'').toLowerCase().includes(t));
       }
-      if (!rows.length) { tbody.innerHTML = ''; empty.style.display = 'block';
+      if (!rows.length) { tbody.replaceChildren(); empty.style.display = 'block';
         empty.textContent = allAlerts.length ? 'No alerts match your filter.' : 'No alerts yet — monitoring traffic…';
         return; }
       empty.style.display = 'none';
-      tbody.innerHTML = rows.map(a => `
-        <tr class="sev-${a.severity}">
-          <td>${a.timestamp}</td>
-          <td><span class="ip">${a.attacker_ip}</span></td>
-          <td>${a.attack_type}</td>
-          <td><span class="badge badge-${a.severity}">${a.severity}</span></td>
-          <td>${a.details||''}</td>
-          <td><span class="mitre">${a.mitre||'—'}</span></td>
-        </tr>`).join('');
+      tbody.replaceChildren(...rows.map(a => {
+        const row = document.createElement('tr');
+        row.className = `sev-${String(a.severity || '')}`;
+        const values = [a.timestamp, a.attacker_ip, a.attack_type, a.severity, a.details || '', a.mitre || '—'];
+        values.forEach((value, index) => {
+          const cell = document.createElement('td');
+          if (index === 1) {
+            const ip = document.createElement('span');
+            ip.className = 'ip';
+            ip.textContent = String(value);
+            cell.appendChild(ip);
+          } else if (index === 3) {
+            const badge = document.createElement('span');
+            badge.className = `badge badge-${String(value || '')}`;
+            badge.textContent = String(value || '');
+            cell.appendChild(badge);
+          } else if (index === 5) {
+            const mitre = document.createElement('span');
+            mitre.className = 'mitre';
+            mitre.textContent = String(value);
+            cell.appendChild(mitre);
+          } else {
+            cell.textContent = String(value ?? '');
+          }
+          row.appendChild(cell);
+        });
+        return row;
+      }));
     }
 
     async function refresh() {

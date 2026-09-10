@@ -2,6 +2,7 @@ import csv
 import io
 import os
 import sys
+from pathlib import Path
 
 sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
@@ -35,3 +36,21 @@ def test_dashboard_endpoints_with_empty_and_populated_state():
     rows = list(csv.reader(io.StringIO(response.get_data(as_text=True))))
     assert rows[0] == ["timestamp", "attacker_ip", "attack_type", "severity", "details"]
     assert rows[1][-1] == "'=unsafe"
+
+
+def test_dashboard_uses_text_nodes_for_alert_fields():
+    template = Path(__file__).parents[1] / "templates" / "index.html"
+    source = template.read_text(encoding="utf-8")
+
+    assert "tbody.innerHTML = rows.map" not in source
+    assert "cell.textContent" in source
+    assert "tbody.replaceChildren" in source
+
+
+def test_dashboard_rejects_non_loopback_binding():
+    try:
+        dashboard.start_dashboard(host="0.0.0.0", port=5000)
+    except ValueError as exc:
+        assert "loopback" in str(exc).lower()
+    else:
+        raise AssertionError("Unauthenticated dashboard accepted a non-loopback bind")

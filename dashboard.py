@@ -97,15 +97,12 @@ def start_dashboard(host=None, port=None, database=None):
     _database = database
     selected_host = config.dashboard_host if host is None else host
     selected_port = config.dashboard_port if port is None else port
-    if selected_host not in {"127.0.0.1", "localhost", "0.0.0.0"}:
-        raise ValueError("dashboard host must be localhost or 0.0.0.0")
+    if selected_host not in {"127.0.0.1", "localhost"}:
+        raise ValueError(
+            "The unauthenticated dashboard is restricted to 127.0.0.1 or localhost."
+        )
     if isinstance(selected_port, bool) or not isinstance(selected_port, int) or not 1 <= selected_port <= 65535:
         raise ValueError("dashboard port must be between 1 and 65535")
-    if selected_host == "0.0.0.0":
-        print("!" * 72)
-        print("WARNING: dashboard has no authentication and is exposed to the LAN.")
-        print("Use 127.0.0.1 unless broad binding is explicitly required.")
-        print("!" * 72)
     app.run(
         host=selected_host,
         port=selected_port,

@@ -63,7 +63,7 @@ PacketSentinel supports three explicitly separated inputs:
 ### 🖥️ Local Dashboard
 
 - Localhost binding to `127.0.0.1` by default
-- Prominent warning for explicit unauthenticated `0.0.0.0` binding
+- Unauthenticated dashboard restricted to loopback (`127.0.0.1` or `localhost`)
 - Live packet, protocol, severity, attack-type, and source statistics
 - Searchable and filterable alert table
 - Chart.js visualizations
@@ -339,13 +339,13 @@ python -c "import flask, scapy, colorama, pytest; print('All project dependencie
 | `python main.py --pcap PATH --no-dashboard` | Analyze an authorized PCAP without Flask |
 | `python main.py --live` | Start explicitly authorized live capture |
 | `python main.py --live --interface "Wi-Fi"` | Capture an explicitly selected authorized interface |
-| `python main.py --host 0.0.0.0` | Expose the unauthenticated dashboard after a prominent warning |
+| `python main.py --host 127.0.0.1` | Run the dashboard on loopback |
 | `python attack.py` | Perform no network activity and display the safe simulator command |
 | `python attack.py --help` | Display gated private-lab check options without sending traffic |
 | `python -m pytest -q` | Run all 29 automated tests |
 | `python -m pip check` | Verify installed dependency consistency |
 
-Do not use `--host 0.0.0.0` for normal demonstrations. The dashboard has no authentication.
+The dashboard has no authentication and therefore rejects non-loopback bind addresses. Add authentication before adapting it for shared or LAN deployment.
 
 ---
 

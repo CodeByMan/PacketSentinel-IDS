@@ -93,8 +93,8 @@ class Config:
                 raise ValueError(f"{name} must be a positive integer or None")
         if isinstance(self.dashboard_port, bool) or not isinstance(self.dashboard_port, int) or not 1 <= self.dashboard_port <= 65535:
             raise ValueError("dashboard_port must be between 1 and 65535")
-        if self.dashboard_host not in {"127.0.0.1", "localhost", "0.0.0.0"}:
-            raise ValueError("dashboard_host must be localhost or 0.0.0.0")
+        if self.dashboard_host not in {"127.0.0.1", "localhost"}:
+            raise ValueError("dashboard_host must be 127.0.0.1 or localhost")
 
         largest_threshold = max(
             self.port_scan_threshold, self.dos_threshold, self.syn_flood_threshold,
