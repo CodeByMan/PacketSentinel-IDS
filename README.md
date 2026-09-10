@@ -469,10 +469,6 @@ The normal demonstration generates fictional packet metadata locally. It uses pr
 
 No PCAP file, real target, credential, personal record, confidential packet, or production threat-intelligence dataset is included.
 
-### Geography
-
-The repository does not use Pakistani government data, Pakistani user data, Karachi network data, or a Pakistani API. Geography is normally irrelevant to standardized packet metadata. This does not reduce the technical value of the project.
-
 ---
 
 ## ⚠️ Scope and Limitations
@@ -498,8 +494,6 @@ Python Developer
 ---
 
 ## 📄 License
-
-Copyright © 2026 Muhammad Ali Nawaz.
 
 This project is licensed under the [MIT License](LICENSE).
 
